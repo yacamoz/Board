@@ -15,6 +15,10 @@ public class MemberController {
     @PostMapping("/createMember")
     public String CreateMember(MemberDTO memberDTO){
         System.out.println(memberDTO);
-        return "home";
+        return "redirect:/userList";
+    }
+    @GetMapping("/userList")
+    public String userList() {
+        return "memberlist";
     }
 }
