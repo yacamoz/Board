@@ -1,50 +1,77 @@
 package springBoard.Board.DTO;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class MemberDTO {
-    private String userId;
-    private String userPassword;
-    private String userName;
-    private String userEmail;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-    public String getUserId() {
-        return userId;
+    @Column(nullable=false)
+    private String memberId;
+    private String memberPassword;
+    private String memberName;
+    private String memberEmail;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public String getMemberId() {
+        return memberId;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getMemberPassword() {
+        return memberPassword;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setMemberPassword(String memberPassword) {
+        this.memberPassword = memberPassword;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getMemberName() {
+        return memberName;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
+    }
+
+    public String getMemberEmail() {
+        return memberEmail;
+    }
+
+    public void setMemberEmail(String memberEmail) {
+        this.memberEmail = memberEmail;
+    }
+
+    public void update(MemberDTO updateMember){
+        this.memberId = updateMember.memberId;
+        this.memberPassword = updateMember.memberPassword;
+        this.memberName = updateMember.memberName;
+        this.memberEmail = updateMember.memberEmail;
     }
 
     @Override
     public String toString() {
         return "MemberDTO{" +
-                "userId='" + userId + '\'' +
-                ", userPassword='" + userPassword + '\'' +
-                ", userName='" + userName + '\'' +
-                ", userEmail='" + userEmail + '\'' +
+                "id=" + id +
+                ", memberId='" + memberId + '\'' +
+                ", memberPassword='" + memberPassword + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", memberEmail='" + memberEmail + '\'' +
                 '}';
     }
 }

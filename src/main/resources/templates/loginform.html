@@ -12,29 +12,19 @@
 </head>
 <body>
 {{> /include/navbar}}
-<div class="container">
-    <table calss="table table-condensed">
-        <caption>사용자 목록</caption>
-        <thead>
-        <tr>
-            <th>아이디</th>
-            <th>이름</th>
-            <th>이메일</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#memberDTO}}
-        <tr>
-            <th scope="row">{{id}}</th>
-            <td>{{memberId}}</td>
-            <td>{{memberName}}</td>
-            <td>{{memberEmail}}</td>
-            <td><a href="updateForm/{{id}}" class="btn btn-success" role="button">수정</a></td>
-        </tr>
-        {{/memberDTO}}
-        </tbody>
-    </table>
-</div>
+<form method="post" action="/login">
+    <div class="mb-3">
+        <label class="form-label">아이디</label>
+        <input type="text" class="form-control" name="memberId" maxlength="20" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">비밀번호</label>
+        <input type="password" class="form-control" name="memberPassword" maxlength="16" required>
+    </div>
+    <button type="submit" class="btn btn-primary">로그인</button>
+</form>
+<a href="/form">회원가입</a>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
