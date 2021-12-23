@@ -14,24 +14,25 @@
 {{> /include/navbar}}
 <div class="container">
     <table calss="table table-condensed">
-        <caption>사용자 목록</caption>
+        <caption>글 목록</caption>
         <thead>
         <tr>
-            <th>아이디</th>
-            <th>이름</th>
-            <th>이메일</th>
+            <th>글 번호</th>
+            <th>글 제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
         </tr>
         </thead>
         <tbody>
-        {{#memberDTO}}
+        {{#boardDTO}}
         <tr>
             <th scope="row">{{id}}</th>
+            <td>{{boardTitle}}</td>
             <td>{{memberId}}</td>
-            <td>{{memberName}}</td>
-            <td>{{memberEmail}}</td>
-            <td><a href="updateForm/{{id}}" class="btn btn-success" role="button">수정</a></td>
+            <td>{{boardDate}}</td>
+            <td><a href="view/{{id}}" class="btn btn-success" role="button">글보기</a></td>
         </tr>
-        {{/memberDTO}}
+        {{/boardDTO}}
         </tbody>
     </table>
 </div>

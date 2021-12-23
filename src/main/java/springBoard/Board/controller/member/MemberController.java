@@ -35,7 +35,7 @@ public class MemberController {
     @GetMapping("updateForm/{id}")
     public String updateForm(@PathVariable Long id, Model model, HttpSession session){
         MemberDTO member1 = (MemberDTO)session.getAttribute("member");
-        if(!member1.getId().equals(id)){
+        if(!member1.matchId(id)){
             return "redirect:/";
         }
         model.addAttribute("memberDTO", memberRepository.findById(id).get());
@@ -43,7 +43,11 @@ public class MemberController {
     }
 
     @PostMapping("/updatemember/{id}")
-    public String updateMember(@PathVariable Long id, MemberDTO updatemember) {
+    public String updateMember(@PathVariable Long id, MemberDTO updatemember, HttpSession session) {
+        MemberDTO member1 = (MemberDTO)session.getAttribute("member");
+        if(!member1.matchId(id)){
+            return "redirect:/";
+        }
         MemberDTO memberdto = memberRepository.getById(id);
         memberdto.update(updatemember);
         memberRepository.save(memberdto);
@@ -59,7 +63,7 @@ public class MemberController {
         if(member == null) {
             return "redirect:/loginform";
         }
-        if (!memberPassword.equals(member.getMemberPassword()))
+        if (!member.matchPassword(memberPassword))
         {
             return "redirect:/loginform";
         }

@@ -64,6 +64,20 @@ public class MemberDTO {
         this.memberEmail = updateMember.memberEmail;
     }
 
+    public boolean matchId(Long newId){
+        if (newId == null){
+            return false;
+        }
+        return newId.equals(id);
+    }
+
+    public boolean matchPassword(String newPassword){
+        if (newPassword == null){
+            return false;
+        }
+        return newPassword.equals(memberPassword);
+    }
+
     @Override
     public String toString() {
         return "MemberDTO{" +
