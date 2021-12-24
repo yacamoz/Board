@@ -10,23 +10,27 @@ import java.sql.Date;
 public class BoardDTO {
     @Id
     @GeneratedValue
-    private Long id;
+    private Long bid;
 
     @Column(nullable=false)
     private String boardTitle;
+
     @Column(nullable=false)
     private String memberId;
+
     @Column(nullable=false)
     private String boardContent;
-    @Column(nullable=false)
-    private String boardDate;
 
-    public Long getId() {
-        return id;
+    @Column(nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date boardDate;
+
+
+    public Long getBid() {
+        return bid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setBid(Long bid) {
+        this.bid = bid;
     }
 
     public String getBoardTitle() {
@@ -53,11 +57,30 @@ public class BoardDTO {
         this.boardContent = boardContent;
     }
 
-    public String getBoardDate() {
+    public Date getBoardDate() {
         return boardDate;
     }
 
-    public void setBoardDate(String boardDate) {
+    public void setBoardDate(Date boardDate) {
         this.boardDate = boardDate;
+    }
+
+    public void update(BoardDTO updateBoard){
+        this.bid=updateBoard.bid;
+        this.memberId= updateBoard.memberId;
+        this.boardDate=updateBoard.boardDate;
+        this.boardTitle=updateBoard.boardTitle;
+        this.boardContent=updateBoard.boardContent;
+    }
+
+    @Override
+    public String toString() {
+        return "BoardDTO{" +
+                "bid=" + bid +
+                ", boardTitle='" + boardTitle + '\'' +
+                ", memberId='" + memberId + '\'' +
+                ", boardContent='" + boardContent + '\'' +
+                ", boardDate=" + boardDate +
+                '}';
     }
 }

@@ -71,6 +71,13 @@ public class MemberDTO {
         return newId.equals(id);
     }
 
+    public boolean matchMemberId(String newId){
+        if (newId == null){
+            return false;
+        }
+        return newId.equals(memberId);
+    }
+
     public boolean matchPassword(String newPassword){
         if (newPassword == null){
             return false;
