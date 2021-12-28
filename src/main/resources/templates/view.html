@@ -11,7 +11,7 @@
 <body>
 {{> /include/navbar}}
 {{#boardDTO}}
-<form method="post" action="/updateBoard/{{bid}}">
+<form method="post">
     <div class="form-group">
         <label for="memberId">작성자</label>
         <input type="text" class="form-control" readonly
@@ -29,25 +29,84 @@
     <div class="form-group">
         <label for="boardContent">글 내용</label>
         <textarea class="form-control" id="boardContent" name="boardContent" readonly
-                   maxlength="4096" style="height: 360px;">{{boardContent}}</textarea>
+                  maxlength="4096" style="height: 360px;">{{boardContent}}</textarea>
     </div>
-    <div class="clearfix" />
+    <div class="clearfix"/>
+
+    {{#writer}}
+    <form method="post" action="/updateBoard/{{bid}}">
+        <button type="submit"
+                class="btn btn-primary clearfix pull-right">
+            수정하기
+        </button>
+    </form>
+    <form method="post" action="/deleteBoard/{{bid}}">
+        <button type="submit"
+                class="btn btn-warning clearfix pull-right">
+            삭제하기
+        </button>
+    </form>
+    {{/writer}}
 </form>
 {{/boardDTO}}
-{{#writer}}
-<form method="post" action="/updateBoard/{{bid}}">
-<button type="submit"
-        class="btn btn-primary clearfix pull-right">
-    수정하기
-</button>
-</form>
-<form method="post" action="/deleteBoard/{{bid}}">
-    <button type="submit"
-            class="btn btn-warning clearfix pull-right">
-        삭제하기
-    </button>
-</form>
-{{/writer}}
+
+<div class="container">
+    <table calss="table table-condensed">
+        <caption>사용자 목록</caption>
+        <thead>
+        <tr>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>작성내용</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#replyDTO}}
+        <tr>
+            <td>{{memberId}}</td>
+            <td>{{replyDate}}</td>
+            <td>{{replyContent}}</td>
+            <td><form method="post" action="/deleteReply/{{rid}}">
+                    <button type="submit" class="btn btn-primary pull-right">
+                    삭제하기
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {{/replyDTO}}
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <form method="post" action="/createReply">
+        {{#member}}
+        <div class="form-group">
+            <label for="memberId">작성자</label>
+            <input type="hidden" class="form-control" readonly
+                   name="memberId"
+                   value="{{memberId}}">
+        </div>
+        {{/member}}
+        {{#boardDTO}}
+        <div class="form-group">
+            <label for="memberId"></label>
+            <input type="hidden" class="form-control" readonly
+                   name="boardId"
+                   value="{{bid}}">
+        </div>
+        {{/boardDTO}}
+        <div class="form-group">
+            <label for="replyContent">댓글</label>
+            <textarea class="form-control" id="replyContent" name="replyContent"
+                      maxlength="4096" style="height: 100px;"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary pull-right">
+            댓글 작성
+        </button>
+    </form>
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

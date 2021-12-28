@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import springBoard.Board.DTO.BoardDTO;
 import springBoard.Board.DTO.MemberDTO;
+import springBoard.Board.DTO.ReplyDTO;
 import springBoard.Board.Repository.BoardRepository;
 import springBoard.Board.Repository.MemberRepository;
+import springBoard.Board.Repository.ReplyRepository;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +24,9 @@ public class BoardController {
     @Autowired
     private BoardRepository boardRepository;
 
+    @Autowired
+    private ReplyRepository replyRepository;
+
     @GetMapping("/board")
     public String boardList(Model model){
         model.addAttribute("boardDTO", boardRepository.findAll());
@@ -33,17 +38,24 @@ public class BoardController {
         model.addAttribute("boardDTO", boardRepository.findById(bid).get());
         BoardDTO thisBoard = boardRepository.findById(bid).get();
         MemberDTO member1 = (MemberDTO)session.getAttribute("member");
+        model.addAttribute("replyDTO", replyRepository.findByBoardId(bid));
 
         if(member1.matchMemberId(thisBoard.getMemberId())){
             session.setAttribute("writer", member1);
+        } else {
+            session.removeAttribute("writer");
         }
         return"view";
     }
 
     @PostMapping("/deleteBoard/{bid}")
     public String deleteBoard(@PathVariable Long bid, HttpSession session){
+        BoardDTO thisBoard = boardRepository.findById(bid).get();
+        MemberDTO writer = (MemberDTO)session.getAttribute("writer");
+        if(!writer.matchMemberId(thisBoard.getMemberId())){
+            return "redirect:/";
+        }
         boardRepository.deleteById(bid);
-        session.removeAttribute("writer");
         return"redirect:/board";
     }
 
@@ -83,5 +95,24 @@ public class BoardController {
         thisBoard.update(updateBoard);
         boardRepository.save(thisBoard);
         return"redirect:/board";
+    }
+
+    @PostMapping("/createReply/{bid}")
+    public String createReply(@PathVariable Long bid, ReplyDTO replyDTO){
+        System.out.println(replyDTO);
+        replyRepository.save(replyDTO);
+        return String.format("redirect:/board/%d", bid);
+    }
+
+    @PostMapping("/deleteReply/{rid}")
+    public String deleteReply(@PathVariable Long rid, HttpSession session){
+        MemberDTO member1 = (MemberDTO)session.getAttribute("member");
+        ReplyDTO thisReply = replyRepository.findById(rid).get();
+        Long bid = thisReply.getBoardId();
+        if(!member1.matchMemberId(thisReply.getMemberId())){
+            return "redirect:/";
+        }
+        replyRepository.deleteById(rid);
+        return String.format("redirect:/board/%d", bid);
     }
 }
