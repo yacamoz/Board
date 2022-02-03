@@ -37,11 +37,11 @@ public class BoardController {
     public String view(@PathVariable Long bid, Model model, HttpSession session){
         model.addAttribute("boardDTO", boardRepository.findById(bid).get());
         BoardDTO thisBoard = boardRepository.findById(bid).get();
-        MemberDTO member1 = (MemberDTO)session.getAttribute("member");
+        MemberDTO member = (MemberDTO)session.getAttribute("member");
         model.addAttribute("replyDTO", replyRepository.findByBoardId(bid));
 
-        if(member1.matchMemberId(thisBoard.getMemberId())){
-            session.setAttribute("writer", member1);
+        if(member.matchMemberId(thisBoard.getMemberId())){
+            session.setAttribute("writer", member);
         } else {
             session.removeAttribute("writer");
         }
@@ -97,11 +97,10 @@ public class BoardController {
         return"redirect:/board";
     }
 
-    @PostMapping("/createReply/{bid}")
+    @PostMapping("/api/createReply/{bid}")
     public String createReply(@PathVariable Long bid, ReplyDTO replyDTO){
-        System.out.println(replyDTO);
         replyRepository.save(replyDTO);
-        return String.format("redirect:/board/%d", bid);
+        return String.format("redirect:/view/%d", bid);
     }
 
     @PostMapping("/deleteReply/{rid}")
@@ -113,6 +112,6 @@ public class BoardController {
             return "redirect:/";
         }
         replyRepository.deleteById(rid);
-        return String.format("redirect:/board/%d", bid);
+        return String.format("redirect:/view/%d", bid);
     }
 }
