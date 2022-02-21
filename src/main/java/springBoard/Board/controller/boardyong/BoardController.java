@@ -18,6 +18,7 @@ import springBoard.Board.Repository.MemberRepository;
 import springBoard.Board.Repository.ReplyRepository;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 @Controller
 public class BoardController {
@@ -35,6 +36,17 @@ public class BoardController {
         Page<BoardDTO> saved = boardRepository.findAll(pageable);
         boolean check = saved.hasNext();
         model.addAttribute("check", check);
+        int pageNumber = pageable.getPageNumber();
+        model.addAttribute("pageNumber", pageNumber);
+        int pageSize = pageable.getPageSize();
+        long totalPage = boardRepository.count()/pageSize;
+        model.addAttribute("pageSize", pageSize);
+        ArrayList<Integer> pageArray = new ArrayList<>();
+        int blockPerPage = ((pageNumber / 5) + 1) * 5;
+        for(int i = blockPerPage-5; i<blockPerPage && i<=totalPage; i++){
+            pageArray.add(i);
+        }
+        model.addAttribute("pageArray", pageArray.toArray());
         return "boardList";
     }
 

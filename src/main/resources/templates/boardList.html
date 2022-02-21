@@ -14,7 +14,9 @@
 {{> /include/navbar}}
 <div class="container">
     <table calss="table table-condensed">
-        <caption>글 목록</caption>
+        {{#pageSize}}
+        <caption>글 목록 {{pageSize}}</caption>
+        {{/pageSize}}
         <thead>
         <tr>
             <th>글 번호</th>
@@ -40,6 +42,9 @@
     </table>
     <ul class="pagination justify-content-center">
         <li class="page-item"><a class="page-link" href="?page={{previous}}">Previous</a></li>
+        {{#pageArray}}
+        <li class="page-item"><a class="page-link" href="?page={{.}}">{{.}}</a></li>
+        {{/pageArray}}
         {{#check}}
         <li class="page-item"><a class="page-link" href="?page={{next}}">Next</a></li>
         {{/check}}
