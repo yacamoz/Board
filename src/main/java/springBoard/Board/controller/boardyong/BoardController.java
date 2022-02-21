@@ -1,6 +1,10 @@
 package springBoard.Board.controller.boardyong;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +21,6 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class BoardController {
-
-    @Autowired
-    private MemberRepository memberRepository;
-
     @Autowired
     private BoardRepository boardRepository;
 
@@ -28,9 +28,14 @@ public class BoardController {
     private ReplyRepository replyRepository;
 
     @GetMapping("/board")
-    public String boardList(Model model){
-        model.addAttribute("boardDTO", boardRepository.findAll());
-        return"boardList";
+    public String boardListPaging(Model model, @PageableDefault(size = 10, sort = "bid", direction = Sort.Direction.DESC) Pageable pageable) {
+        Model boardDTO = model.addAttribute("boardDTO", boardRepository.findAll(pageable));
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        Page<BoardDTO> saved = boardRepository.findAll(pageable);
+        boolean check = saved.hasNext();
+        model.addAttribute("check", check);
+        return "boardList";
     }
 
     @GetMapping("/view/{bid}")

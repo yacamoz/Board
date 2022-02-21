@@ -49,9 +49,8 @@
 </form>
 {{/writer}}
 
-<div class="container">
-    <table calss="table table-condensed">
-        <caption>사용자 목록</caption>
+<div>
+    <table>
         <thead>
         <tr>
             <th>작성자</th>
@@ -62,15 +61,16 @@
         <tbody>
         {{#replyDTO}}
         <tr>
-            <td>{{memberId}}</td>
-            <td>{{replyDate}}</td>
-            <td>{{replyContent}}</td>
-            <td><form method="post" action="/deleteReply/{{rid}}">
-                    <button type="submit" class="btn btn-primary pull-right">
+            <td class="col-2">{{memberId}}</td>
+            <td class="col-2">{{replyDate}}</td>
+            <td class="col-8">{{replyContent}}</td>
+            <td class="col-2"><form method="post" action="/deleteReply/{{rid}}">
+                    <button type="submit" class="btn btn-danger pull-right">
                     삭제하기
                     </button>
                 </form>
             </td>
+
         </tr>
         {{/replyDTO}}
         </tbody>
@@ -83,7 +83,6 @@
         {{/boardDTO}}
         {{#member}}
         <div class="form-group">
-            <label for="memberId">작성자</label>
             <input type="hidden" class="form-control" readonly
                    name="memberId"
                    value="{{memberId}}">
