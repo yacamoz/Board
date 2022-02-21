@@ -13,9 +13,9 @@ https://www.youtube.com/watch?v=JUKehW-c484&list=PLqaSEyuwXkSppQAjwjXZgKkjWbFoUd
 ![image](https://user-images.githubusercontent.com/88639890/154595988-22ba5309-60f3-4aee-bde0-1581be02b52b.png)
 로그인 화면입니다.
 
-![K-006](https://user-images.githubusercontent.com/88639890/154596070-dc5a48d9-06cd-4913-9d67-1e60d697d3ec.png)
-게시판 페이지 화면입니다.
-페이지는 존재하나 아직은 미구현 상태입니다.
+![페이징처리](https://user-images.githubusercontent.com/88639890/154904053-fae58925-f0af-465d-aaaa-9241573083bb.gif)
+게시판 + 페이지네이션 화면입니다.
+
 
 ![K-008](https://user-images.githubusercontent.com/88639890/154596205-5b2c451e-2259-42ca-aa64-aab056106a3d.png)
 글쓰기 화면입니다.
